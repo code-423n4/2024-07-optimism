@@ -39,7 +39,7 @@ _Note for C4 wardens: Anything included in this `Automated Findings / Publicly K
 - **Documentation:** https://specs.optimism.io/fault-proof/stage-one/fault-dispute-game.html
 - **Website:** https://optimism.io/
 - **X/Twitter:** https://twitter.com/Optimism
-- **Discord:** [ ⭐️ SPONSORS: add info here ]
+- **Discord:** https://discord.com/invite/optimism
 
 ---
 
