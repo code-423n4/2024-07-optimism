@@ -11,13 +11,13 @@
 - Starts July 15, 2024 20:00 UTC
 - Ends July 29, 2024 20:00 UTC
 
-*❗️Breakdown for HM awards:
+***❗️Breakdown for HM awards:**
 - 5% Hunter bonus (10,000 $OP)
 - 5% Gatherer bonus (10,000 $OP)
 - 10% Dark Horse bonus (20,000 $OP)
 - HM awards (154,700 $OP)
 
-**Dark Horse bonus: **
+**Dark Horse bonus:**
 - Everyone competes against Pro League teams in order to win a Dark Horse bonus (ranking by [HM award algorithm](https://docs.code4rena.com/awarding/incentive-model-and-awards#high-and-medium-risk-bugs)).
 - The Dark Horse bonus is distributed from the HM pool.
 - 10% of the total awards (20,000) are split amongst everyone who beats or ties one Pro League team. (If no one beats or ties a Pro League team, no Dark Horse bonus is awarded.)
