@@ -195,8 +195,5 @@ To run gas benchmarks
 make gas
 ```
 
-✅ SCOUTS: Add a screenshot of your terminal showing the gas report
-✅ SCOUTS: Add a screenshot of your terminal showing the test coverage
-
 ## Miscellaneous
 Employees of Optimism and employees' family members are ineligible to participate in this audit.
