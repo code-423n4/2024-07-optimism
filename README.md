@@ -24,7 +24,7 @@
 
 **Pro League side pool:**
 - Pro League side pool is split 60/40 among Pro League teams based on their [Gatherer score](https://docs.code4rena.com/awarding/incentive-model-and-awards#bonuses-for-top-competitors).
-- Pro League teams also compete for a portion of HM awards but are not eligible for Hunter/Gather/Dark Horse bonuses.
+- Pro League teams also compete for a portion of HM awards but are not eligible for Hunter/Gatherer/Dark Horse bonuses.
 
 _Note: The judge/validator is performing their role for $0 in order to maximize the awards pool, in service of public goods._
 
