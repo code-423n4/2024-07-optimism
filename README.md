@@ -1,14 +1,27 @@
 # Optimism Superchain audit details
-- Total Prize Pool: $200000 in OP
-  - HM awards: $200000 in OP
-  - Judge awards: XXX XXX USDC (Notion: Judge Fee)
-  - Lookout awards: XXX XXX USDC (Notion: Sum of Pre-sort fee + Pre-sort early bonus)
-  - Scout awards: $500 USDC (Notion: Scout fee - but usually $500 USDC)
+- Total Prize Pool: 200,000 OP + $80,000 in USDC 
+  - Main Warden Pool: 200,000 OP
+    - HM awards: XXXX OP - *
+    - QA awards: 5,000 OP
+    - Judge awards: XXXX OP
+    - Validator awards: XXXX OP
+    - Scout awards: $500 USDC
+  - Pro League Side Pool: $80,000 in USDC
+    - HM awards: $78,000 in USDC
+    - QA awards: $2,000 in USDC
 - Join [C4 Discord](https://discord.gg/code4rena) to register
 - Submit findings [using the C4 form](https://code4rena.com/contests/2024-07-optimism-superchain/submit)
 - [Read our guidelines for more details](https://docs.code4rena.com/roles/wardens)
 - Starts July 15, 2024 20:00 UTC
 - Ends July 29, 2024 20:00 UTC
+
+*❗️Awarding Rules: the total HM awards for the Main Pool will be broken down as follows:
+- 5% Hunter bonus (5,000 OP)
+- 5% Gatherer bonus (5,000 OP)
+- 5-10% Dark Horse bonus (5,000 - 10,000 OP)
+- 80-85% HM awards (XXXX - XXXX OP)
+
+Pro League teams are also competing for a portion of the HM awards, but will not receive the Hunter/Gather/Dark Horse bonuses.  More details here: [Dark Horse Era of C4](link to a page with Dark horse info).
 
 ## Automated Findings / Publicly Known Issues
 
