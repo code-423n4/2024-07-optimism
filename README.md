@@ -1,4 +1,4 @@
-# Optimism Superchain audit details
+# OP Fault Proofs audit details
 - Total Prize Pool: 200,000 OP + $80,000 in USDC 
   - Main Warden Pool: 200,000 OP
     - HM awards: XXXX OP - *
