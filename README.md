@@ -1,27 +1,32 @@
 # Optimism Superchain audit details
-- Total Prize Pool: 200,000 OP + $80,000 in USDC 
-  - Main Warden Pool: 200,000 OP
-    - HM awards: XXXX OP - *
-    - QA awards: 5,000 OP
-    - Judge awards: XXXX OP
-    - Validator awards: XXXX OP
-    - Scout awards: $500 USDC
+- Total Prize Pool: 200,000 $OP + $80,000 in USDC 
+  - Open Competition Pool: 200,000 $OP
+    - HM awards: 194,700 $OP*
+    - QA awards: 5,000 $OP
+    - Scout awards: 300 $OP
   - Pro League Side Pool: $80,000 in USDC
-    - HM awards: $78,000 in USDC
-    - QA awards: $2,000 in USDC
 - Join [C4 Discord](https://discord.gg/code4rena) to register
 - Submit findings [using the C4 form](https://code4rena.com/contests/2024-07-optimism-superchain/submit)
 - [Read our guidelines for more details](https://docs.code4rena.com/roles/wardens)
 - Starts July 15, 2024 20:00 UTC
 - Ends July 29, 2024 20:00 UTC
 
-*❗️Awarding Rules: the total HM awards for the Main Pool will be broken down as follows:
-- 5% Hunter bonus (5,000 OP)
-- 5% Gatherer bonus (5,000 OP)
-- 5-10% Dark Horse bonus (5,000 - 10,000 OP)
-- 80-85% HM awards (XXXX - XXXX OP)
+***❗️Breakdown for HM awards:**
+- 5% Hunter bonus (10,000 $OP)
+- 5% Gatherer bonus (10,000 $OP)
+- 10% Dark Horse bonus (20,000 $OP)
+- HM awards (154,700 $OP)
 
-Pro League teams are also competing for a portion of the HM awards, but will not receive the Hunter/Gather/Dark Horse bonuses.  More details here: [Dark Horse Era of C4](link to a page with Dark horse info).
+**Dark Horse bonus:**
+- Everyone competes against Pro League teams in order to win a Dark Horse bonus (ranking by [HM award algorithm](https://docs.code4rena.com/awarding/incentive-model-and-awards#high-and-medium-risk-bugs)).
+- The Dark Horse bonus is distributed from the HM pool.
+- 10% of the total awards (20,000) are split amongst everyone who beats or ties one Pro League team. (If no one beats or ties a Pro League team, no Dark Horse bonus is awarded.)
+
+**Pro League side pool:**
+- Pro League side pool is split 60/40 among Pro League teams based on their [Gatherer score](https://docs.code4rena.com/awarding/incentive-model-and-awards#bonuses-for-top-competitors).
+- Pro League teams also compete for a portion of HM awards but are not eligible for Hunter/Gatherer/Dark Horse bonuses.
+
+_Note: The judge/validator is performing their role for $0 in order to maximize the awards pool, in service of public goods._
 
 ## Automated Findings / Publicly Known Issues
 
