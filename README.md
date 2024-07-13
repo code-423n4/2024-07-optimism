@@ -195,6 +195,11 @@ N/A
 
 ## Running tests
 
+Dependencies:
+1. Golang compiler (v1.21.1)
+2. Rust compiler (>= 1.75.0)
+3. pnpm (any version)
+4. foundry suite (version = 63fff3510408b552f11efb8196f48cfe6c1da664)
 
 
 Run `pnpm clean` and rerun the tests if tests are failing for an unknown reason.
@@ -203,10 +208,9 @@ Run `pnpm clean` and rerun the tests if tests are failing for an unknown reason.
 ```bash
 git clone https://github.com/code-423n4/2024-07-optimism
 cd 2024-07-optimism/packages/contracts-bedrock
-git submodule update --init --recursive
 
-npm i
-forge test
+forge install
+pnpm test
 ```
 
 To run code coverage
