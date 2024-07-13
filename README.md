@@ -38,7 +38,9 @@ _Note for C4 wardens: Anything included in this `Automated Findings / Publicly K
 
 Welcome to the Fault Dispute Game competitive audit!
 
-Optimism [deployed its Fault Dispute Game on Mainnet last month](https://vote.optimism.io/proposals/72085170435228531173144599119267762084652443676555508407874836206178427511368), with many carefully audited safeguards surrounding the game to protect the protocol in the event of a exploit. As they move towards confidence in removing those safeguards, one of the key pieces is a competitive audit with the ecosystem's top talent. This is where you come in.
+Optimism [deployed its Fault Dispute Game on Mainnet last month](https://vote.optimism.io/proposals/72085170435228531173144599119267762084652443676555508407874836206178427511368), with many carefully audited safeguards surrounding the game to protect the protocol in the event of a exploit. As they move towards confidence in removing those safeguards, one of the key pieces is a competitive audit with the ecosystem's top talent.
+
+This is where you come in.
 
 ## What Is A Fault Dispute Game?
 
