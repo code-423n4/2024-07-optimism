@@ -201,7 +201,6 @@ Dependencies:
 4. foundry suite (version = 63fff3510408b552f11efb8196f48cfe6c1da664)
 
 
-Run `pnpm clean` and rerun the tests if tests are failing for an unknown reason.
 
 
 ```bash
@@ -209,13 +208,21 @@ git clone https://github.com/code-423n4/2024-07-optimism
 cd 2024-07-optimism/packages/contracts-bedrock
 
 forge install
-pnpm test
+pnpm build:go-ffi
+# running tests for the entire bedrock contracts would take a while, the following command
+# would filter only to the dispute tests
+forge test --mp "*dispute*"
 ```
 
-To run code coverage
-```bash
-forge coverage
+Run `pnpm clean` and rerun the tests if tests are failing for an unknown reason.
+
+Also, if there are any issues while running `forge` running the following command might solve this. This builds and installs the specific version of Foundry that was used while building the project (this might take a while).
 ```
+cd 2024-07-optimism
+# requires `jq` to be installed
+pnpm install:foundry
+```
+
 
 
 ## Miscellaneous
