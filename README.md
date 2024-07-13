@@ -38,7 +38,7 @@ _Note for C4 wardens: Anything included in this `Automated Findings / Publicly K
 
 Welcome to the Fault Dispute Game competitive audit!
 
-Optimism deployed its Fault Dispute Game on Mainnet last month, with many carefully audited safeguards surrounding the game to protect the protocol in the event of a exploit. As they move towards confidence in removing those safeguards, one of the key pieces is a competitive audit with the ecosystem's top talent. This is where you come in.
+Optimism [deployed its Fault Dispute Game on Mainnet last month](https://vote.optimism.io/proposals/72085170435228531173144599119267762084652443676555508407874836206178427511368), with many carefully audited safeguards surrounding the game to protect the protocol in the event of a exploit. As they move towards confidence in removing those safeguards, one of the key pieces is a competitive audit with the ecosystem's top talent. This is where you come in.
 
 ## What Is A Fault Dispute Game?
 
@@ -67,12 +67,9 @@ We aren't looking for ways to get around the safeguards, or bugs in the Optimism
 Instead, we are looking for any flaws in the game and MIPS VM logic.
 
 In other words:
-
-_Can a dishonest actor ever prove a false claim?_
-
-_Can an honest actor ever fail to prove a true claim?_
-
-_Does the game misbehave in any other ways that could cause problems if there were no safeguards?_
+- _Can a dishonest actor ever prove a false claim?_
+- _Can an honest actor ever fail to prove a true claim?_
+- _Does the game misbehave in any other ways that could cause problems if there were no safeguards?_
 
 ## How Does Optimism Work?
 
