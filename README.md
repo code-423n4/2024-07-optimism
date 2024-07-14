@@ -30,7 +30,15 @@ _Note: The judge/validator is performing their role for $0 in order to maximize 
 
 ## Automated Findings / Publicly Known Issues
 
-The 4naly3er report can be found [here](https://github.com/code-423n4/2024-07-optimism/blob/main/4naly3er-report.md).
+1. `loadPrecompilePreimagePart()` can be called with too little gas so that the precompile reverts and the result overwrites valid data.
+
+2. If the contract is configured so that `SPLIT_DEPTH + 1 = MAX_DEPTH` and the last game step is a defend action, ancestor lookup can misbehave and lead to an out of bounds array access.
+
+3. If an attacker has more funds than the honest defender, they can continually open more subgames until the defender runs out of money and the challenger takes all their bonds (aka [proof of whale](https://ethresear.ch/t/fraud-proofs-are-broken/19234)).
+
+4. If a defender is going to lose the game, they can call `challengeRootL2Block()` on themselves, and they will get priority and take their own top level bond payout, instead of paying them to the real challenger.
+
+5. The 4naly3er report can be found [here](https://github.com/code-423n4/2024-07-optimism/blob/main/4naly3er-report.md).
 
 _Note for C4 wardens: Anything included in this `Automated Findings / Publicly Known Issues` section is considered a publicly known issue and is ineligible for awards._
 
