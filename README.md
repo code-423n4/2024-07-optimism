@@ -142,7 +142,7 @@ Note the current version of the contracts are deployed on Mainnet to:
 
 Any file not listed in the table above is out of scope for this audit.
 
-While the rest of the repo may be useful to look at for context, and for implications of how bugs in the Fualt Dispute Game might be exploited, this audit is focused only on issues from the in scope contracts themselves.
+While the rest of the repo may be useful to look at for context, and for implications of how bugs in the Fault Dispute Game might be exploited, this audit is focused only on issues from the in scope contracts themselves.
 
 If other issues are found, Optimism has an active [bug bounty program](https://immunefi.com/bug-bounty/optimism) where they can be submitted.
 
