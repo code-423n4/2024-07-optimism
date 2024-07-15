@@ -97,7 +97,7 @@ To understand the context for how Optimism works (and where this Fault Dispute G
 
 Because many issues submitted in this audit will be about complex interactions between the Attacker and Challenger, it is important that POCs accurately demonstrate this logic.
 
-To that end, please use the [E2E Cannon Tests](https://github.com/ethereum-optimism/optimism/blob/develop/op-e2e/faultproofs/output_cannon_test.go) as a starting point for all POCs that involve interactions between various actors.
+To that end, please use the [E2E Cannon Tests](https://github.com/ethereum-optimism/optimism/blob/develop/op-e2e/faultproofs/output_cannon_test.go) as a starting point for all POCs that involve interactions between various actors. See [Running tests](#running-tests) for more detailed instructions.
 
 Forge tests are acceptable for any POCs that only need to demonstrate small or isolated properties, but the smart contract test suite is not configured with the full honest challenger behavior nor does it use the actual fault proof VM as the step function. POCs that try to prove complex behavior with Forge tests will not be accepted.
 
@@ -210,13 +210,13 @@ Dependencies:
 3. pnpm (any version)
 4. foundry suite (version = 63fff3510408b552f11efb8196f48cfe6c1da664)
 
-
-
-
 ```bash
 git clone https://github.com/code-423n4/2024-07-optimism
 cd 2024-07-optimism/packages/contracts-bedrock
+```
 
+To run Foundry tests:
+```
 forge install
 pnpm build:go-ffi
 # running tests for the entire bedrock contracts would take a while, the following command
@@ -224,16 +224,21 @@ pnpm build:go-ffi
 forge test --mp "*dispute*"
 ```
 
-Run `pnpm clean` and rerun the tests if tests are failing for an unknown reason.
-
-Also, if there are any issues while running `forge` running the following command might solve this. This builds and installs the specific version of Foundry that was used while building the project (this might take a while).
+To run e2e tests:
 ```
-cd 2024-07-optimism
-# requires `jq` to be installed
-pnpm install:foundry
+# from the root of the project
+make install-geth
+make cannon-prestate
+make devnet-allocs
+
+# from the op-e2e folder
+make test-cannon
 ```
 
-
+If tests are failing for an unknown reason:
+- ensure you have the latest version of foundry installed: `pnpm update:foundry` (requires `jq` to be installed)
+- try deleting the `packages/contracts-bedrock/forge-artifacts` directory
+- if the above step doesn't fix the error, try `pnpm clean`
 
 ## Miscellaneous
 Employees of Optimism and employees' family members are ineligible to participate in this audit.
