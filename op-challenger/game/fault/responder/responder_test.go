@@ -284,6 +284,19 @@ func TestPerformAction(t *testing.T) {
 		require.Equal(t, 0, uploader.updates)
 		require.Equal(t, 1, oracle.existCalls)
 	})
+
+	t.Run("challengeL2Block", func(t *testing.T) {
+		responder, mockTxMgr, contract, _, _ := newTestFaultResponder(t)
+		challenge := &types.InvalidL2BlockNumberChallenge{}
+		action := types.Action{
+			Type:                          types.ActionTypeChallengeL2BlockNumber,
+			InvalidL2BlockNumberChallenge: challenge,
+		}
+		err := responder.PerformAction(context.Background(), action)
+		require.NoError(t, err)
+		require.Len(t, mockTxMgr.sent, 1)
+		require.Equal(t, []interface{}{challenge}, contract.challengeArgs)
+	})
 }
 
 func newTestFaultResponder(t *testing.T) (*FaultResponder, *mockTxManager, *mockContract, *mockPreimageUploader, *mockOracle) {
@@ -359,6 +372,7 @@ type mockContract struct {
 	attackArgs           []interface{}
 	defendArgs           []interface{}
 	stepArgs             []interface{}
+	challengeArgs        []interface{}
 	updateOracleClaimIdx uint64
 	updateOracleArgs     *types.PreimageOracleData
 }

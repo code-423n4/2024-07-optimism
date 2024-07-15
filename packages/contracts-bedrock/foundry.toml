@@ -20,6 +20,7 @@ remappings = [
   'ds-test/=lib/forge-std/lib/ds-test/src',
   'safe-contracts/=lib/safe-contracts/contracts',
   'kontrol-cheatcodes/=lib/kontrol-cheatcodes/src',
+  'gelato/=lib/automate/contracts'
 ]
 extra_output = ['devdoc', 'userdoc', 'metadata', 'storageLayout']
 bytecode_hash = 'none'
@@ -52,7 +53,6 @@ line_length=120
 multiline_func_header='all'
 bracket_spacing=true
 wrap_comments=true
-ignore = ['src/vendor/WETH9.sol']
 
 ################################################################
 #                         PROFILE: CI                          #

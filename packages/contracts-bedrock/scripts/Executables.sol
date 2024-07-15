@@ -2,6 +2,7 @@
 pragma solidity ^0.8.0;
 
 import { Vm } from "forge-std/Vm.sol";
+import { Process } from "scripts/libraries/Process.sol";
 
 /// @notice The executables used in ffi commands. These are set here
 ///         to have a single source of truth in case absolute paths
@@ -23,7 +24,7 @@ library Executables {
         string[] memory commands = new string[](3);
         commands[0] = bash;
         commands[1] = "-c";
-        commands[2] = "git rev-parse HEAD";
-        return string(vm.ffi(commands));
+        commands[2] = "cast abi-encode 'f(string)' $(git rev-parse HEAD)";
+        return abi.decode(Process.run(commands), (string));
     }
 }

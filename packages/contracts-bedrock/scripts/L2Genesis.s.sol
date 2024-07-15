@@ -25,6 +25,7 @@ import { L1CrossDomainMessenger } from "src/L1/L1CrossDomainMessenger.sol";
 import { L1StandardBridge } from "src/L1/L1StandardBridge.sol";
 import { FeeVault } from "src/universal/FeeVault.sol";
 import { EIP1967Helper } from "test/mocks/EIP1967Helper.sol";
+import { Process } from "scripts/libraries/Process.sol";
 
 interface IInitializable {
     function initialize(address _addr) external;
@@ -39,11 +40,13 @@ struct L1Dependencies {
 /// @notice Enum representing different ways of outputting genesis allocs.
 /// @custom:value DEFAULT_LATEST Represents only latest L2 allocs, written to output path.
 /// @custom:value LOCAL_LATEST   Represents latest L2 allocs, not output anywhere, but kept in-process.
+/// @custom:value LOCAL_ECOTONE  Represents Ecotone-upgrade L2 allocs, not output anywhere, but kept in-process.
 /// @custom:value LOCAL_DELTA    Represents Delta-upgrade L2 allocs, not output anywhere, but kept in-process.
 /// @custom:value OUTPUT_ALL     Represents creation of one L2 allocs file for every upgrade.
 enum OutputMode {
     DEFAULT_LATEST,
     LOCAL_LATEST,
+    LOCAL_ECOTONE,
     LOCAL_DELTA,
     OUTPUT_ALL
 }
@@ -154,6 +157,16 @@ contract L2Genesis is Deployer {
         }
 
         activateEcotone();
+
+        if (_mode == OutputMode.LOCAL_ECOTONE) {
+            return;
+        }
+        if (_mode == OutputMode.OUTPUT_ALL) {
+            writeGenesisAllocs(Config.stateDumpPath("-ecotone"));
+        }
+
+        activateFjord();
+
         if (_mode == OutputMode.OUTPUT_ALL || _mode == OutputMode.DEFAULT_LATEST) {
             writeGenesisAllocs(Config.stateDumpPath(""));
         }
@@ -192,7 +205,7 @@ contract L2Genesis is Deployer {
             vm.etch(addr, code);
             EIP1967Helper.setAdmin(addr, Predeploys.PROXY_ADMIN);
 
-            if (Predeploys.isSupportedPredeploy(addr)) {
+            if (Predeploys.isSupportedPredeploy(addr, cfg.useInterop())) {
                 address implementation = Predeploys.predeployToCodeNamespace(addr);
                 console.log("Setting proxy %s implementation: %s", addr, implementation);
                 EIP1967Helper.setImplementation(addr, implementation);
@@ -212,7 +225,7 @@ contract L2Genesis is Deployer {
         // 01: legacy, not used in OP-Stack
         setDeployerWhitelist(); // 2
         // 3,4,5: legacy, not used in OP-Stack.
-        setWETH9(); // 6: WETH9 (not behind a proxy)
+        setWETH(); // 6: WETH (not behind a proxy)
         setL2CrossDomainMessenger(_l1Dependencies.l1CrossDomainMessengerProxy); // 7
         // 8,9,A,B,C,D,E: legacy, not used in OP-Stack.
         setGasPriceOracle(); // f
@@ -231,6 +244,10 @@ contract L2Genesis is Deployer {
         setSchemaRegistry(); // 20
         setEAS(); // 21
         setGovernanceToken(); // 42: OP (not behind a proxy)
+        if (cfg.useInterop()) {
+            setCrossL2Inbox(); // 22
+            setL2ToL2CrossDomainMessenger(); // 23
+        }
     }
 
     function setProxyAdmin() public {
@@ -324,9 +341,16 @@ contract L2Genesis is Deployer {
 
     /// @notice This predeploy is following the safety invariant #1.
     function setL1Block() public {
-        _setImplementationCode(Predeploys.L1_BLOCK_ATTRIBUTES);
-        // Note: L1 block attributes are set to 0.
-        // Before the first user-tx the state is overwritten with actual L1 attributes.
+        if (cfg.useInterop()) {
+            string memory cname = "L1BlockInterop";
+            address impl = Predeploys.predeployToCodeNamespace(Predeploys.L1_BLOCK_ATTRIBUTES);
+            console.log("Setting %s implementation at: %s", cname, impl);
+            vm.etch(impl, vm.getDeployedCode(string.concat(cname, ".sol:", cname)));
+        } else {
+            _setImplementationCode(Predeploys.L1_BLOCK_ATTRIBUTES);
+            // Note: L1 block attributes are set to 0.
+            // Before the first user-tx the state is overwritten with actual L1 attributes.
+        }
     }
 
     /// @notice This predeploy is following the safety invariant #1.
@@ -342,31 +366,9 @@ contract L2Genesis is Deployer {
     /// @notice This predeploy is following the safety invariant #1.
     ///         This contract is NOT proxied and the state that is set
     ///         in the constructor is set manually.
-    function setWETH9() public {
-        console.log("Setting %s implementation at: %s", "WETH9", Predeploys.WETH9);
-        vm.etch(Predeploys.WETH9, vm.getDeployedCode("WETH9.sol:WETH9"));
-
-        vm.store(
-            Predeploys.WETH9,
-            /// string public name
-            hex"0000000000000000000000000000000000000000000000000000000000000000",
-            /// "Wrapped Ether"
-            hex"577261707065642045746865720000000000000000000000000000000000001a"
-        );
-        vm.store(
-            Predeploys.WETH9,
-            /// string public symbol
-            hex"0000000000000000000000000000000000000000000000000000000000000001",
-            /// "WETH"
-            hex"5745544800000000000000000000000000000000000000000000000000000008"
-        );
-        vm.store(
-            Predeploys.WETH9,
-            // uint8 public decimals
-            hex"0000000000000000000000000000000000000000000000000000000000000002",
-            /// 18
-            hex"0000000000000000000000000000000000000000000000000000000000000012"
-        );
+    function setWETH() public {
+        console.log("Setting %s implementation at: %s", "WETH", Predeploys.WETH);
+        vm.etch(Predeploys.WETH, vm.getDeployedCode("WETH.sol:WETH"));
     }
 
     /// @notice This predeploy is following the safety invariant #1.
@@ -463,6 +465,18 @@ contract L2Genesis is Deployer {
         vm.resetNonce(address(eas));
     }
 
+    /// @notice This predeploy is following the saftey invariant #2.
+    ///         This contract has no initializer.
+    function setCrossL2Inbox() internal {
+        _setImplementationCode(Predeploys.CROSS_L2_INBOX);
+    }
+
+    /// @notice This predeploy is following the saftey invariant #2.
+    ///         This contract has no initializer.
+    function setL2ToL2CrossDomainMessenger() internal {
+        _setImplementationCode(Predeploys.L2_TO_L2_CROSS_DOMAIN_MESSENGER);
+    }
+
     /// @notice Sets all the preinstalls.
     ///         Warning: the creator-accounts of the preinstall contracts have 0 nonce values.
     ///         When performing a regular user-initiated contract-creation of a preinstall,
@@ -494,6 +508,12 @@ contract L2Genesis is Deployer {
 
         vm.prank(L1Block(Predeploys.L1_BLOCK_ATTRIBUTES).DEPOSITOR_ACCOUNT());
         GasPriceOracle(Predeploys.GAS_PRICE_ORACLE).setEcotone();
+    }
+
+    function activateFjord() public {
+        console.log("Activating fjord in GasPriceOracle contract");
+        vm.prank(L1Block(Predeploys.L1_BLOCK_ATTRIBUTES).DEPOSITOR_ACCOUNT());
+        GasPriceOracle(Predeploys.GAS_PRICE_ORACLE).setFjord();
     }
 
     /// @notice Sets the bytecode in state
@@ -538,7 +558,7 @@ contract L2Genesis is Deployer {
         commands[0] = "bash";
         commands[1] = "-c";
         commands[2] = string.concat("cat <<< $(jq -S '.' ", _path, ") > ", _path);
-        vm.ffi(commands);
+        Process.run(commands);
     }
 
     /// @notice Funds the default dev accounts with ether
