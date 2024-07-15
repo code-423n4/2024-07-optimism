@@ -29,6 +29,7 @@
 _Note: The judge/validator is performing their role for $0 in order to maximize the awards pool._
 
 ## Automated Findings / Publicly Known Issues
+(https://github.com/spearbit/portfolio/blob/master/pdfs/Spearbit-Coinbase-Security-Review-June-2024.pdf) on these contracts is considered known, including:
 
 1. `loadPrecompilePreimagePart()` can be called with too little gas so that the precompile reverts and the result overwrites valid data, which can be used to prove an invalid execution trace.
 
