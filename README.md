@@ -30,7 +30,7 @@ _Note: The judge/validator is performing their role for $0 in order to maximize 
 
 ## Automated Findings / Publicly Known Issues
 
-1. `loadPrecompilePreimagePart()` can be called with too little gas so that the precompile reverts and the result overwrites valid data.
+1. `loadPrecompilePreimagePart()` can be called with too little gas so that the precompile reverts and the result overwrites valid data, which can be used to prove an invalid execution trace.
 
 2. If the contract is configured so that `SPLIT_DEPTH + 1 = MAX_DEPTH` and the last game step is a defend action, ancestor lookup can misbehave and lead to an out of bounds array access.
 
