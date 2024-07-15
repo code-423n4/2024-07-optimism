@@ -38,7 +38,9 @@ _Note: The judge/validator is performing their role for $0 in order to maximize 
 
 4. If a defender is going to lose the game, they can call `challengeRootL2Block()` on themselves, and they will get priority and take their own top level bond payout, instead of paying them to the real challenger.
 
-5. The 4naly3er report can be found [here](https://github.com/code-423n4/2024-07-optimism/blob/main/4naly3er-report.md).
+5. The Go program cannot garbage collect on the MIPS VM, with garbage collection symbols explicitly patched out. Theoretically this could allow for overflowing the heap.
+
+6. The 4naly3er report can be found [here](https://github.com/code-423n4/2024-07-optimism/blob/main/4naly3er-report.md).
 
 _Note for C4 wardens: Anything included in this `Automated Findings / Publicly Known Issues` section is considered a publicly known issue and is ineligible for awards._
 
