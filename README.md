@@ -117,12 +117,12 @@ Forge tests are acceptable for any POCs that only need to demonstrate small or i
 
 | **Contract**                         | **SLOC** |
 |--------------------------------------|----------|
-| src/dispute/FaultDisputeGame.sol     | 469      |
-| src/dispute/DisputeGameFactory.sol   | 125      |
-| src/cannon/MIPS.sol                  | 690      |
-| src/cannon/PreimageOracle.sol        | 470      |
-| src/cannon/PreimageKeyLib.sol        | 26       |
-| src/cannon/libraries/CannonTypes.sol | 67       |
+| [src/dispute/FaultDisputeGame.sol](https://github.com/code-423n4/2024-07-optimism/blob/main/packages/contracts-bedrock/src/dispute/FaultDisputeGame.sol)     | 469      |
+| [src/dispute/DisputeGameFactory.sol](https://github.com/code-423n4/2024-07-optimism/blob/main/packages/contracts-bedrock/src/dispute/DisputeGameFactory.sol)   | 125      |
+| [src/cannon/MIPS.sol](https://github.com/code-423n4/2024-07-optimism/blob/main/packages/contracts-bedrock/src/cannon/MIPS.sol)                                 | 690      |
+| [src/cannon/PreimageOracle.sol](https://github.com/code-423n4/2024-07-optimism/blob/main/packages/contracts-bedrock/src/cannon/PreimageOracle.sol)              | 470      |
+| [src/cannon/PreimageKeyLib.sol](https://github.com/code-423n4/2024-07-optimism/blob/main/packages/contracts-bedrock/src/cannon/PreimageKeyLib.sol)             | 26       |
+| [src/cannon/libraries/CannonTypes.sol](https://github.com/code-423n4/2024-07-optimism/blob/main/packages/contracts-bedrock/src/cannon/libraries/CannonTypes.sol) | 67       |
 | **TOTAL**                            | **1847** |
 
 
