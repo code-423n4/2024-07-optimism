@@ -104,7 +104,7 @@ Forge tests are acceptable for any POCs that only need to demonstrate small or i
 
 ## Links
 
-- **Previous audits:**  There was a [Sherlock contest](https://github.com/sherlock-audit/2024-02-optimism-2024-judging/) on the safeguards around the Fault Dispute Game. Some issues in the game itself were submitted, despite being out of scope.
+- **Previous audits:**  There was a [Sherlock contest](https://github.com/sherlock-audit/2024-02-optimism-2024-judging/) on the safeguards around the Fault Dispute Game. Some issues in the game itself were submitted, despite being out of scope. There was also a [Spearbit Coinbase audit](https://github.com/spearbit/portfolio/blob/master/pdfs/Spearbit-Coinbase-Security-Review-June-2024.pdf).
 - **Documentation:** https://specs.optimism.io/fault-proof/stage-one/fault-dispute-game.html
 - **Website:** https://optimism.io/
 - **X/Twitter:** https://twitter.com/Optimism
