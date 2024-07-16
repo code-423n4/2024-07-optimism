@@ -28,6 +28,10 @@
 
 _Note: The judge/validator is performing their role for $0 in order to maximize the awards pool._
 
+**IMPORTANT NOTE:** Prior to receiving payment from this audit you MUST complete a basic KYC (Know Your Customer) process.
+
+You do not have to be KYC'd before submitting bugs. But you must a) successfully complete the basic KYC process within 30 days of the audit end date in order to receive awards. This applies to all audit participants, including wardens, teams, judges, validators, and scouts.
+
 ## Automated Findings / Publicly Known Issues
 All issues from the [Spearbit Coinbase audit](https://github.com/spearbit/portfolio/blob/master/pdfs/Spearbit-Coinbase-Security-Review-June-2024.pdf) on these contracts is considered known, including:
 
