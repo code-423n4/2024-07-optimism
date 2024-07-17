@@ -29,7 +29,7 @@
 _Note: The judge/validator is performing their role for $0 in order to maximize the awards pool._
 
 ## Automated Findings / Publicly Known Issues
-All issues from the [Spearbit Coinbase audit](https://github.com/spearbit/portfolio/blob/master/pdfs/Spearbit-Coinbase-Security-Review-June-2024.pdf) on these contracts is considered known, including:
+All issues from the [Spearbit Coinbase audit](https://github.com/spearbit/portfolio/blob/35e01e225519242589ab83f6fad100db892bcfe9/pdfs/Spearbit-Coinbase-Security-Review-June-2024.pdf) on these contracts is considered known, including:
 
 1. `loadPrecompilePreimagePart()` can be called with too little gas so that the precompile reverts and the result overwrites valid data, which can be used to prove an invalid execution trace.
 
@@ -104,7 +104,7 @@ Forge tests are acceptable for any POCs that only need to demonstrate small or i
 
 ## Links
 
-- **Previous audits:**  There was a [Sherlock contest](https://github.com/sherlock-audit/2024-02-optimism-2024-judging/) on the safeguards around the Fault Dispute Game. Some issues in the game itself were submitted, despite being out of scope. There was also a [Spearbit Coinbase audit](https://github.com/spearbit/portfolio/blob/master/pdfs/Spearbit-Coinbase-Security-Review-June-2024.pdf).
+- **Previous audits:**  There was a [Sherlock contest](https://github.com/sherlock-audit/2024-02-optimism-2024-judging/) on the safeguards around the Fault Dispute Game. Some issues in the game itself were submitted, despite being out of scope. There was also a [Spearbit Coinbase audit](https://github.com/spearbit/portfolio/blob/35e01e225519242589ab83f6fad100db892bcfe9/pdfs/Spearbit-Coinbase-Security-Review-June-2024.pdf).
 - **Documentation:** https://specs.optimism.io/fault-proof/stage-one/fault-dispute-game.html
 - **Website:** https://optimism.io/
 - **X/Twitter:** https://twitter.com/Optimism
