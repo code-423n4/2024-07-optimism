@@ -29,7 +29,7 @@
 _Note: The judge/validator is performing their role for $0 in order to maximize the awards pool._
 
 ## Automated Findings / Publicly Known Issues
-All issues from the [Spearbit Coinbase audit](https://github.com/spearbit/portfolio/blob/35e01e225519242589ab83f6fad100db892bcfe9/pdfs/Spearbit-Coinbase-Security-Review-June-2024.pdf) on these contracts is considered known, including:
+All issues from the [Spearbit Coinbase audit](https://github.com/spearbit/portfolio/blob/35e01e225519242589ab83f6fad100db892bcfe9/pdfs/Spearbit-Coinbase-Security-Review-June-2024.pdf) and the [Sherlock Fault Proof Safeguards audit](https://github.com/sherlock-audit/2024-02-optimism-2024-judging/issues) (including [this list](https://oplabs.notion.site/EXTERNAL-OP-Stack-Fault-Proofs-Sherlock-Contest-Side-Pot-Information-dace917ba76c4bd89891f2b092b0a008) of out of scope issues that focused on the Fault Dispute Game) are considered known, including:
 
 1. `loadPrecompilePreimagePart()` can be called with too little gas so that the precompile reverts and the result overwrites valid data, which can be used to prove an invalid execution trace.
 
