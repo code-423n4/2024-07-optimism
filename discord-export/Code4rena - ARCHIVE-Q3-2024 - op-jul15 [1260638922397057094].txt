@@ -1,0 +1,950 @@
+==============================================================
+Guild: Code4rena
+Channel: ARCHIVE-Q3-2024 / op-jul15
+==============================================================
+
+[07/15/2024 14:08] kartoonjoy (pinned)
+👋 Hello and welcome to the audit channel for the 200,000 OP **Optimism Superchain** audit!
+
+📆 Audit opens 07/15/2024 20:00 (20:00 UTC) and runs through 07/29/2024 20:00 (20:00 UTC) (14 days).
+
+Please give a warm welcome to the Optimism team, joined by @obront, who will be available for questions either here in the channel or via a PRIVATE thread in the ET/CT timezone(s). 
+
+🤖 **Documentation bot assistance:** For general questions about the codebase once the audit goes live, give our documentation bot a try, by tagging `@Docs Wolf` in any thread (private or public) and asking your question. The bot will make its best attempt to answer based on the codebase and documentation, and link you to relevant resources.  
+
+We'll be posting relevant links, documentation, etc. here, so if you intend to participate in this audit, consider enabling notifications for this channel. 🐺 ⏰
+
+Audit Page: https://code4rena.com/audits/2024-07-optimism-superchain#top
+
+
+[07/15/2024 14:21] realfakepicnic (pinned)
+@🐺Wardens Reminder: Fault Proof code walk-through in the OP Code Walk-Through channel in ~an hour! https://discord.gg/KTmftBuG?event=1261714912028266657
+
+{Reactions}
+🎉 (18) 
+
+[07/15/2024 14:24] kartoonjoy
+Pinned a message.
+
+
+[07/15/2024 14:24] kartoonjoy
+Pinned a message.
+
+
+[07/15/2024 17:04] realfakepicnic (pinned)
+Recording of the Fault Proof code walk-through just posted! https://youtu.be/1j39oABi_G4?si=Ca17b33cAPXHse_v
+
+{Embed}
+Code4rena
+https://www.youtube.com/watch?v=1j39oABi_G4
+OP Fault Proof Code Walk Through
+Learn about OP fault proofs and what to focus on during the July 15th-July 29th 200,000 $OP audit competition on Code4rena
+Code4rena - ARCHIVE-Q3-2024 - op-jul15 [1260638922397057094].txt_Files/maxresdefault-0C419.jpg
+
+{Reactions}
+💯 (15) 
+
+[07/15/2024 19:50] itsmetechjay
+Pinned a message.
+
+
+[07/15/2024 20:02] C4 (pinned)
+**Automated Findings / Publicly Known Issues**
+
+Reminder: all [Automated Findings / Publicly Known Issues](https://github.com/code-423n4/2024-07-optimism#automated-findings--publicly-known-issues) are out of scope and ineligible for awards.
+
+{Embed}
+https://github.com/code-423n4/2024-07-optimism
+GitHub - code-423n4/2024-07-optimism
+Contribute to code-423n4/2024-07-optimism development by creating an account on GitHub.
+Code4rena - ARCHIVE-Q3-2024 - op-jul15 [1260638922397057094].txt_Files/4fbc12fa-99cd-4a42-94b4-7467ad0e3028-88DAB
+
+
+[07/15/2024 20:02] itsmetechjay
+Pinned a message.
+
+
+[07/15/2024 23:14] pascal9476
+Wym I get to read Sam and pwing findings in a contest 😮‍💨
+
+{Reactions}
+🔥 (10) 
+
+[07/16/2024 02:59] fastchecker_27
+When distributing reward, will KYC be need?
+
+
+[07/16/2024 17:22] holterhus
+In the code there is this comment that explains the reason that bonds are awarded to the left-most valid counter:
+
+```solidity
+// The left-most correct counter is preferred in bond payouts in order to discourage attackers
+// from countering invalid subgame roots via an invalid defense position. As such positions
+// cannot be correctly countered.
+```
+
+I have a question that's more of a double check - is this comment saying that an invalid defence against an invalid claim is technically a "freeloader claim" (i.e. if it goes uncontested then the overall resolution is still correct) but also it's impossible to dispute these types of defences even if you wanted to? And if so, is there an easy way to understand why it's not possible dispute in these scenario?
+
+
+[07/16/2024 18:23] kartoonjoy
+@obront
+
+
+[07/16/2024 18:24] tamayonft
+is someone having this error
+
+
+[07/16/2024 18:24] tamayonft
+```Error: 
+failed to extract foundry config:
+foundry config error: Unknown variant transient-storage for setting `ignored_error_codes.0`  ```
+
+
+[07/16/2024 18:25] tamayonft
+??
+
+
+[07/16/2024 18:25] tamayonft
+trying to run the froundry test
+
+
+[07/16/2024 18:59] zachobront
+Did you try `pnpm update:foundry`? And other possible steps in https://github.com/code-423n4/2024-07-optimism?tab=readme-ov-file#running-tests?
+
+
+[07/16/2024 19:00] zachobront
+cc @clabby can you chime in here?
+
+
+[07/16/2024 19:07] clab.by (pinned)
+in-between meetings & can give a more long-winded answer later if still needed, but
+
+> is this comment saying that an invalid defence against an invalid claim is technically a "freeloader claim" (i.e. if it goes uncontested then the overall resolution is still correct)
+Yes, this is the case.
+
+This is primarily to keep incentives in line. An invalid attack/defense (or what mofi wrote as "freeloader" claim) against an invalid claim doesn't affect overall resolution, but can take the bond away from the honest party in certain cases. The situation where the right move was to attack, but another party defended instead, isn't really consequential to the honest challenger, since global rez is unaffected & they still win the incentive. Though because of the left-most rule in bond payouts, if the right move was to defend, but the other party attacked, the honest challenger does have to counter that in order to win the bond.
+
+Because of subgame rez rules, where only 1 child has to be correct for the subgame root to be invalid, the honest challenger can challenge the freeloader claim. Their original, correctly placed move can continue to be defended as to not affect the global resolution result, and once they show that the freeloader claim was misplaced, they'll win the bond in the original subgame by re-taking the "left-most, correct" status.
+
+{Reactions}
+🔥 (2) 
+
+[07/16/2024 20:15] holterhus
+Got it, I think that all makes sense. Thanks for the extra context
+
+
+[07/17/2024 02:46] enckrish
+The spearbit audit link is 404. Can someone post the correct link?
+
+
+[07/17/2024 04:36] zachobront
+Fixed 🫡
+
+{Reactions}
+thankyou (2) 
+
+[07/17/2024 05:36] kartoonjoy
+Pinned a message.
+
+
+[07/17/2024 13:05] j4x_98
+Am I correct that based on this snippet from the contest description, all issues from the sherlock contest are OOS?
+```txt
+Previous audits: There was a Sherlock contest on the safeguards around the Fault Dispute Game. Some issues in the game itself were submitted, despite being out of scope. There was also a Spearbit Coinbase audit.
+```
+
+
+[07/17/2024 13:38] ililhunterlili
+aren't those the ones with side pot?
+
+
+[07/17/2024 13:38] ililhunterlili
+are those public?
+
+
+[07/17/2024 13:40] j4x_98
+Yeah all issues from the sherlock contest are public
+
+
+[07/17/2024 14:53] zachobront
+Correct, they're out of scope. I'll add a link and clarify in Known Issues too. Thanks.
+
+
+[07/17/2024 14:55] j4x_98
+Thanks for clarifying 🙂
+
+
+[07/17/2024 20:24] ladboy233
+https://docs.optimism.io/stack/protocol/fault-proofs/mips#state-hash
+
+{Embed}
+https://docs.optimism.io/stack/protocol/fault-proofs/mips
+Fault Proof VM - MIPS.sol | Optimism Docs
+Learn about the `MIPS.sol` smart contract that works as part of Optimism's Fault Proof Virtual Machine.
+
+
+[07/17/2024 20:24] ladboy233
+I have a question about why this state hash can be unfinished,
+
+
+[07/17/2024 20:24] ladboy233
+it is because resolve / computing takes time?
+
+
+[07/17/2024 20:24] ladboy233
+do we know how long that time will take?
+
+
+[07/17/2024 20:25] ladboy233
+https://docs.optimism.io/stack/protocol/fault-proofs/mips#handlebranch
+
+{Embed}
+https://docs.optimism.io/stack/protocol/fault-proofs/mips
+Fault Proof VM - MIPS.sol | Optimism Docs
+Learn about the `MIPS.sol` smart contract that works as part of Optimism's Fault Proof Virtual Machine.
+
+
+[07/17/2024 20:25] ladboy233
+Also the documentation says the code trieds to conform the MIPS specification
+
+
+[07/17/2024 20:25] ladboy233
+Which MIPS specification? it is a version of MIPS research paper?
+
+
+[07/17/2024 20:26] ladboy233
+https://www.cs.cmu.edu/afs/cs/academic/class/15740-f97/public/doc/mips-isa.pdf
+
+
+[07/17/2024 20:27] ladboy233
+oh looks like this is the link from the OP docs...
+
+
+[07/17/2024 20:55] zachobront
+my understanding is that `unfinished` is the default state when we are in the middle of an execution trace. it doesn't change to `valid` or `invalid` until an exit code is hit and the trace is over. @clabby can you confirm?
+
+
+[07/17/2024 20:56] zachobront
+step occurs on chain, so there's no such thing as the computation taking time. it's just representing a snapsnot of the mips vm internal memory, and i believe `unfinished` is just sharing that the mips vm is in the middle of processing after the step (as opposed to finished and exited).
+
+
+[07/17/2024 21:57] ladboy233
+Thanks obront, you are a legend!
+
+{Reactions}
+STRONGERS_OP (12) 👀 
+
+[07/17/2024 22:04] haxatron1
+I may have missed this from the video, but what is the trace ancestor of a claim and what is the simple way of finding it?
+
+
+[07/17/2024 22:05] haxatron1
+Nvm i found it in my past thread in Sherlock:
+
+The trace index of a position is found by walking down right to the leaf nodes of the tree and taking the index at depth. The trace ancestor is the highest position that commits to the same index, and can be found by walking up to the parent until the parent is either the root of the tree or the left child of its parent.
+
+
+[07/17/2024 22:51] haxatron1
+when we attack a claim, this means that we disagree with it.
+when we defend a claim, this means that we agree with it.
+assuming that challenger 1 attacked in the turn before, why would the challenger 2 choose to defend the attacking claim? challenger 2 should just attack challenger 1 claim because he disagrees with it?
+
+
+[07/17/2024 23:20] holterhus
+I can try to help based on my understanding
+
+The reason that defend needs to exist is in case someone attacks a valid claim using another valid claim. In this case you can't let the attack go uncontested (because that would resolve the OG claim to invalid), but you also can't attack it because it's a correct claim. So defend is an option for this scenario
+
+Another way I've been thinking of it:  defending a claim is for when you agree with a claim but want that claim to resolve to invalid because of what's happening higher up the tree
+
+
+[07/18/2024 02:17] zachobront
+The clarification is that defend doesn't just mean "I agree with it."
+
+Let's take the simplest example. I propose a claim with a given root. Because of the trace index stuff you described above, we follow down and to the right all the way down the tree, and this means that the root commits to the furthest right leaf of the tree.
+
+Someone attacks my claim. What that means is that they disagree with the claim (ie they don't think my claim is true for the further right leaf of the tree). But practically what it means is that they create a new claim that is the left child of mine. If we follow that down and to the right, it lands at the midpoint of the leafs. So to "attack", what we are saying is (a) I think that claim is wrong and (b) here is what I think is valid at the midpoint.
+
+Someone else might think WE are wrong about the midpoint and attack us. They'd step to our left child and if we follow the trace down to the right, they'd be at the quarter way point. Etc etc etc.
+
+But what if the original claimer says "yeah, your halfway point is right, but it doesn't actually dispute mine?" That's a defend. It moves up in the tree, then down to the right child, then down to its left child. If we follow that down, it commits at the 3/4 point of the three. So basically what that's saying is "yes, your challenge was right, but it doesn't actually refute mine."
+
+By going back and forth using just these two types of moves (attack: "you are wrong, here's my halfway point", defend: "you are right, but you're not actually refuting your parent claim") — you can always land on the correct point of disagreement in a bisection.
+
+Does that make sense? If you go back to the docs with that context, some of the diagrams and stuff might click and become clearer.
+
+{Reactions}
+🔥 (7) 
+
+[07/18/2024 02:17] zachobront
+(If you haven't watched the code walkthrough, Vex does a good job explaining and showing diagram about this there, as well.)
+
+
+[07/18/2024 05:19] haxatron1
+Thank you. Everything is starting to fall into place now :STRONGERS_OP:
+
+
+[07/18/2024 08:23] cheatc0d3
+OP is really OP😩
+
+{Reactions}
+pepeOPDrumming (15) pepeOPKeyboard (15) pepeOPMariachi (15) pepeOPSax (15) pepeOPSing (15) 
+
+[07/18/2024 15:59] saediek
+fr bruh it's like i am auditing rust
+
+
+[07/18/2024 16:57] haxatron1
+Yea, somehow this contest is 10 times harder than sherlock contest 😂
+
+
+[07/18/2024 17:01] thisvishalsingh
+I see more code added to the scope contract after prev audit.
+
+
+[07/18/2024 18:22] forgebyola
+That's cause it's yul
+
+
+[07/18/2024 19:09] annachhh
+what do u mean
+
+
+[07/19/2024 02:42] oxtenma
+op - overpowered
+
+{Reactions}
+😂 (3) 🔥 (3) 
+
+[07/19/2024 04:52] 0xshaheen
+OptimusPrime
+
+{Reactions}
+🔥 (6) 
+
+[07/20/2024 12:05] tch1001
+Started a thread.
+
+
+[07/20/2024 16:31] mnnmnnmnnnn
+I think that by auditing OP bedrock and now this I have learned more Golang and solidity assembly than in months of learning.
+
+{Reactions}
+🔥 
+
+[07/21/2024 00:50] haxatron1
+How does the STF on L2 get translated to MIPS instructions?
+
+
+[07/21/2024 21:26] zachobront
+op-program implements the L2 STF and compiles to MIPS
+
+
+[07/21/2024 21:59] haxatron1
+Hmm, so the op-program translates the L2 STF to MIPS instruction?
+
+Then the MIPS instruction submitted to offchain cannon mipsevm program and then run which will give the correct execution trace?
+
+
+[07/22/2024 02:24] zachobront
+hmm to be slightly more precise:
+- the op-program is a Go program that implements the L2 STF
+- it can be compiled to MIPS, which results in a program which consists of a series of MIPS instructions that execute the L2 STF
+- that compiled program is used by op-challenger to generate data when needed to play the game (you can see `op-challenger/game/fault/trace/cannon/executor.go` for logic of how it runs the program to grab the proofs)
+
+
+[07/22/2024 02:25] zachobront
+i believe mipsevm is just for testing, but @clabby can confirm
+
+
+[07/22/2024 06:32] mnnmnnmnnnn
+The best way to understand the logic is to review the tests already implemented in Go and see how they configure the testing environment.
+
+
+[07/22/2024 10:18] al_qa_qa
+why `(depth diff % 2 == 0)` means the step agree with parent in `FDG::step()` same in `FDG::move()`, why if the depth different between between the parent and the disputedLeaf is `2` it means we agree with parent.
+
+
+[07/22/2024 11:50] mnnmnnmnnnn
+diff % 2 == 0(even), because it is on an even level compared to the parent and means that it is aligned or symmetrical with the parent layer.
+
+{Reactions}
+👍 
+
+[07/22/2024 11:54] alexfilippov314
+Hello! If the issue can break game logic but can be handled by safeguards (which might require switching to a permissioned type of game), should it be submitted via sensitive disclosure, or can it be submitted as usual?
+
+
+[07/22/2024 15:34] zachobront
+Treated as usual
+
+
+[07/22/2024 15:36] alexfilippov314
+Got it, thanks!
+
+
+[07/23/2024 06:28] moeid3
+@obront plz check private thread
+
+{Reactions}
+👍 
+
+[07/23/2024 15:50] eme0242
+@obront , @clabby please check private thread
+
+
+[07/23/2024 17:02] 0xhacksmithh
+@clabby sir could you pls check PT
+
+
+[07/23/2024 17:11] zachobront
+@0xhacksmithh please direct questions to me, not vex
+
+
+[07/24/2024 03:18] eme0242
+Please who can explain in what scenario a defense step would be used
+I understand attack move, defense move and attack step, but can't seem to wrap my head around defend step
+
+
+[07/24/2024 03:30] eme0242
+My understanding:
+- Alice believes claim X posted by Bob is invalid, so she makes an attack move on X, providing the claim Y she believes is correct at the half way position
+- Bob sees that Alice claim Y does not dispute his halfway claim, so he calls Defend on Y, providing claim at 3/4 position(relative to X)
+- Once claims have been bisected to the maximum depth, an attack step can be made against an execution trace(leaves of the DAG) to prove the incorrect state transition A->B. If successful, that execution trace has successfully been countered
+
+So where does the defense step come in?
+
+
+[07/24/2024 03:32] eme0242
+@obront ?🥲
+
+
+[07/24/2024 04:03] zachobront
+- Near the end of bisection, Bob makes the claim that state after step 100 is X
+- Alice does attack move, which is implicitly saying that she disagrees with Bob, and also includes the claim that state after step 99 is Y. Since the delta between the trace indices is 1, we're ready to step.
+- If Bob does a defend step, he is saying that "Alice's 99 = Y is right, but that doesn't dispute my 100 = X"
+- We can see in the defend step that prestate = parent.claim (this is Alice's claim).
+- Post state is Bob's claim (it works up to find the trace ancestor of step 100, which is Bob).
+- For the step to succeed, Bob needs vm.step to be valid. This is because `parentPostAgree` is false, since Bob's claim and Alice's claim are offset by 1 depth.
+- If he can prove that 99 = Y => 100 = X, then he counters Alice's attack successfully.
+
+{Reactions}
+👍 (2) 🔥 (3) 
+
+[07/24/2024 04:32] eme0242
+TY sir🫡
+
+
+[07/24/2024 17:28] koolexc
+Hi @obront ,
+To execute a transaction, how many steps you need in the MIPS? a bit of insight on this would be appreciated.
+
+
+[07/24/2024 17:29] koolexc
+Trying to understand, how this would match with the off chain program
+
+
+[07/24/2024 17:33] zachobront
+it varies a lot. the MIPS program that is run (op-program) executes a full block.
+
+
+[07/24/2024 17:37] koolexc
+got it. so we expect a set of ~~transactions~~ instructions that execute a full block to reach to the final result from the VM (MIPS.sol) ? any instance demonstrated of this? Thank you!
+
+
+[07/24/2024 20:47] 0x_white_devil
+Where is `parentPos.move(_isAttack)` this function present
+
+
+[07/24/2024 21:25] zachobront
+right. the instruction trace from compiling op-program to MIPS represents the transition from the VM's prestate to the claimed post state. you can look at op-challenger and its tests for examples of how this happens.
+
+{Reactions}
+🙏 👍 
+
+[07/24/2024 21:25] zachobront
+in LibPosition.sol
+
+
+[07/25/2024 06:57] koolexc
+Started a thread.
+
+
+[07/25/2024 08:25] al_qa_qa
+Is this means `FDG::step()::VM.step` executes the full disputed block (that is at depth SPLIT_DEPTH, before spliting), or it only executes the instruction that is at `MAX_DEPTH`?
+
+
+[07/25/2024 08:53] koolexc
+I think, multiple steps will be executed but only at the depth of max+1 always. since at this stage, depth doesn't increase.  obront will correct me if I'm wrong.
+
+
+[07/25/2024 08:59] bluesky_hope
+Why `vmStatus` should be marked as `INVALID` or `PANIC` when the move is `attack` in the `_verifyExecBisectionRoot` function?
+
+
+[07/25/2024 09:02] al_qa_qa
+This means that when VM executes the step, it should be an Invalid Step. You can check the condition in `FDG::step()`, it is clearer there.
+
+
+[07/25/2024 09:34] __melonwater
+More specifically, it means the op-program produces invalid or panic as the final outcome.
+
+
+[07/25/2024 15:24] zachobront
+the point of the lower half of the tree of the bisection game is to navigate to an individual instruction that's disagreed on. then VM.step() exectes that one instruction.
+
+{Reactions}
+👍 
+
+[07/25/2024 15:26] zachobront
+if you're attacking a root claim of the exectution trace, you should be demonstrating that the root claim panics.
+
+
+[07/25/2024 17:11] 0xvdelta
+@obront could u pls check private thread 👀
+
+
+[07/25/2024 17:31] zachobront
+responded there
+
+{Reactions}
+thank_you 
+
+[07/25/2024 18:13] 0x_white_devil
+So SPLIT_DEPTH is till individual blocks, what i mean if the Root is hash of multiple Blocks, till this each bolck, Depth consider as SPLIT_DEPTH beyound that when bisection enter a Block it goes for MAX_DEPTH check  Right??
+
+{Reactions}
+❔ 
+
+[07/26/2024 16:11] tch1001
+are L2 block numbers supposed to be consecutive?
+
+
+[07/26/2024 16:23] eme0242
+consecutive as in 1,2,3,4,...? No
+it only has to be in increasing order
+
+
+[07/26/2024 16:41] tch1001
+thanks! what dictates a "correct" L2 block number?
+
+
+[07/26/2024 17:12] eme0242
+it has to be greater than the last one recorded in anchorStateRegistry
+
+
+[07/26/2024 17:14] tch1001
+But if that’s the only constraint, what decides if the proposer’s block number or the challenger’s block number is the correct one in challengeRootL2BlockNumber?
+
+
+[07/26/2024 18:35] holterhus
+The `challengeRootL2BlockNumber()` function is checking two of the proposer's values together - one value is `l2BlockNumber()` which they initialized the game with and another is the l2 block number that's within the `rootClaim()` that they initialized the game with. So if those two numbers don't match there's definitely something fishy going on because they're from the same person
+
+{Reactions}
+👍 (2) 
+
+[07/26/2024 20:20] 0xhacksmithh
+@obront Sir made a PT, check pls whenever you have free time
+
+{Reactions}
+👍 
+
+[07/27/2024 14:22] asilver_eth
+@obront pls check pts
+
+
+[07/28/2024 07:57] kartoonjoy
+🤖 **Documentation bot assistance:** For general questions about the codebase, give our documentation bot a try, by tagging `@Docs Wolf` in any thread (private or public) and asking your question. The bot will make its best attempt to answer based on the codebase and documentation, and link you to relevant resources.
+
+
+[07/29/2024 19:24] sivanesh_808
+Good luck guys 🍀
+
+{Reactions}
+💜 (2) 
+
+[07/29/2024 19:27] haxatron1
+One of the most challenging and fun audits I ever did :chefskiss:
+
+{Reactions}
+chefskiss (4) 
+
+[07/29/2024 19:28] haxatron1
+:STRONGERS_OP: :pepeOPDrumming: :pepeOPKeyboard: :pepeOPMariachi: :pepeOPSax: :pepeOPSing:
+
+
+[07/29/2024 19:37] saba1914
+gud evening 1st 48 hours greeting all and wishing to plz congratulating all @obront and please may u verify finding(s) report for @arabgodx arabgodx
+
+{Reactions}
+hyperfastparrot (4) 
+
+[07/29/2024 20:03] itsmetechjay
+**🚨 AUDIT ALERT**
+
+@🐺Wardens  The **Optimism** audit is now closed! Huge thanks to everyone who participated 🔍, whether you submitted a finding or not.
+
+What's next: The sponsor team and judge will review the findings over the next couple of weeks. Feel free to ping a Civics-Admin if you have questions along the way!
+
+
+[08/03/2024 03:29] haxatron1
+
+
+{Attachments}
+Code4rena - ARCHIVE-Q3-2024 - op-jul15 [1260638922397057094].txt_Files/remix-73e4a2cb-17ba-44cb-b7f1-b8eefdd74b41-6322C.png
+
+{Reactions}
+😱 (5) 
+
+[08/03/2024 03:29] haxatron1
+https://tenor.com/view/waah-waa-sad-wah-waaah-gif-25875771
+
+{Embed}
+https://tenor.com/view/waah-waa-sad-wah-waaah-gif-25875771
+Code4rena - ARCHIVE-Q3-2024 - op-jul15 [1260638922397057094].txt_Files/waah-waa-D7BCD.png
+
+
+[08/03/2024 04:20] _3doc_
+Unfortunately, this applies to so many more prices than OP 💸
+
+
+[08/04/2024 05:38] ililhunterlili
+is the pot priced at the start of the contest?
+
+
+[08/04/2024 05:43] _3doc_
+The pot for this contest is expressed in OP https://discord.com/channels/810916927919620096/958800160870240286/1262414084507439145
+
+{Reactions}
+👍 
+
+[08/04/2024 05:51] ililhunterlili
+well this is still very high enough,
+
+{Reactions}
+🥲 
+
+[08/05/2024 03:28] haxatron1
+
+
+{Attachments}
+Code4rena - ARCHIVE-Q3-2024 - op-jul15 [1260638922397057094].txt_Files/remix-e4ac63f1-32c0-477c-a284-52d47c385eb9-CA2C5.png
+
+{Reactions}
+💀 (2) 🥲 (4) 
+
+[08/05/2024 03:28] haxatron1
+WELP :kewk:
+
+
+[08/05/2024 03:30] haxatron1
+Once escalations end it will be less than $1 :doubleRollingCoggers:
+
+{Reactions}
+🫠 (3) 😂 (2) 
+
+[08/10/2024 17:40] olanre_waju
+result drops when it's baack to 1.9:hi5: 🚀
+
+{Attachments}
+Code4rena - ARCHIVE-Q3-2024 - op-jul15 [1260638922397057094].txt_Files/image-95E3A.png
+
+{Reactions}
+STRONGERS_OP (4) pepeOPDrumming (4) pepeOPKeyboard (4) pepeOPMariachi (4) pepeOPSing (4) pepeOPSax (4) 
+
+[08/11/2024 21:09] unclejeff4407
+So never?
+
+{Reactions}
+itshappening 
+
+[08/12/2024 21:32] liveactionllamac4
+🤑 🎉  Awards for **Optimism Superchain:**
+
+**Open Competition**
+
+58,987.81 $OP » RadiantLabs (@EV_om, @3DOC, @haxatron)
+46,772.07 $OP » @xuwinnie 
+27,306.60 $OP » Zubat (@pwning, @rileyholterhus)
+13,561.41 $OP » @alexfilippov314 
+9,975.35 $OP  » @K42 Ψ 
+9,975.35 $OP » @Topmark 
+5,191.71 $OP » Femboys (@samczsun, @cts)
+4,173.45 $OP  » @0x1771 
+3,694.91 $OP  » @kuprum 
+3,659.68 $OP  » @n4nika 
+3,433.84 $OP » @KupiaSec
+3,433.84 $OP » @bronze_pickaxe
+3,433.84 $OP » @zraxx
+2,422.47 $OP » @oakcobalt 
+2,180.90 $OP » @ether_sky 
+1,496.80 $OP » @OKOMO
+
+**Pro League Side Pool**
+
+$48,000 USDC » Zubat (@pwning, @rileyholterhus)
+$32,000 USDC » Femboys (@samczsun, @cts)
+
+🏁 Findings summary
+--------------------------------------—
+5 High risk findings
+11 Med risk findings
+59 wardens contributed
+
+Dark Horses: xuwinnie, RadiantLabs, alexfilippov314, K42, Topmark
+Top Hunter: RadiantLabs
+Top Gatherer: RadiantLabs
+Top QA report: RadiantLabs
+
+Congratulations all!  💸 💸 💸
+
+Please note:
+- ⚠️ Awardees, be sure to review [this announcement](https://discord.com/channels/810916927919620096/810929015509483554/1272625452909072415) and fill in your tax info. This must be completed within 30 days to receive your award distribution for this audit (i.e. before Thursday, 12 September 2024 15:00). Awards will be distributed on Optimism and Polygon in weekly batches as wardens complete their tax info.
+- Also, the leaderboard update will take some extra time as we tailor it to fit the unique rules of this competition. Thanks for your patience!
+
+*If you participated in this audit and don’t see your name on this list, please wait until the report is published and the findings repo is made public to check on your submissions.*
+
+{Reactions}
+hi5 (4) 🎉 (6) 🔥 (5) 
+
+[08/12/2024 21:57] olanre_waju
+Congratulations to all 🍾
+
+{Reactions}
+🔥 (3) 
+
+[08/12/2024 21:58] olanre_waju
+Congratulations 🎊 @Topmark
+
+{Reactions}
+💪🏻 (2) chefskiss (2) 
+
+[08/12/2024 22:01] olanre_waju
+@EV_om @haxatron @3DOC  you guys did a fantastic job 👏 here! Hats off!
+
+{Reactions}
+🎉 (5) 💜 (5) 
+
+[08/12/2024 22:12] bigsam0831
+Congratulations everyone 👏.  @Topmark 🫡
+
+{Reactions}
+🎉 (3) 
+
+[08/12/2024 22:13] irving6969
+last place 🤣
+
+{Reactions}
+🚀 (3) 
+
+[08/12/2024 22:18] _k42
+Progress has been made!!!! 👽 Thank you Optimism! Time to get a lot better 😝 Congratulations everyone! Make this win worth it 🙏🌙🙏
+
+
+[08/12/2024 22:21] _k42
+Extreme thank you to @obront also. I am very grateful to you 💎
+
+
+[08/12/2024 22:24] mylifechangefast.eth_70767
+👀🤣
+
+{Reactions}
+🤣 
+
+[08/12/2024 22:24] mylifechangefast.eth_70767
+You killed it👍
+
+{Reactions}
+thankyou 
+
+[08/12/2024 22:56] __melonwater
+Congrats everyone!
+
+{Reactions}
+🫡 (10) 👏 (6) 🎉 (7) 
+
+[08/12/2024 23:00] topmark1
+👀
+
+
+[08/12/2024 23:02] topmark1
+:chefskiss:
+
+
+[08/12/2024 23:04] topmark1
+Congratulations everyone🔥🔥🔥🥷🥷
+
+
+[08/12/2024 23:05] topmark1
+
+
+{Attachments}
+Code4rena - ARCHIVE-Q3-2024 - op-jul15 [1260638922397057094].txt_Files/image0-E874A.gif
+
+{Reactions}
+🔥 (4) 🎉 (2) 🫡 (2) 🚀 (3) 
+
+[08/13/2024 02:02] hickuphh3
+Excellent findings!
+
+{Reactions}
+STRONGERS_OP (7) 
+
+[08/13/2024 03:03] sin1st3r__
+RadiantLabs delivered! Big congrats chads @EV_om @3DOC 🫡
+
+{Reactions}
+💜 (9) STRONGERS_OP (5) 💯 (4) 
+
+[08/13/2024 03:24] daniel526
+That was an amazing job @EV_om @3DOC @haxatron congratulations
+
+{Reactions}
+STRONGERS_OP (3) 💜 (3) 
+
+[08/13/2024 05:08] 0xhacksmithh
+🫡 🫡 :chefskiss:
+
+
+[08/13/2024 06:36] t1moh
+Great job Radiant Labs @3DOC @haxatron @EV_om
+
+
+[08/13/2024 06:38] haxatron1
+Thank you ser, and congrats on your splendid Beanstalk results too :STRONGERS_OP:
+
+
+[08/13/2024 06:38] haxatron1
+And congrats everyone
+
+{Reactions}
+🔥 (11) 👀 (3) 
+
+[08/13/2024 08:08] alexfilippov314
+Congrats everyone!
+
+
+[08/13/2024 08:16] _3doc_
+Thanks mate 💜
+
+
+[08/13/2024 08:20] _3doc_
+Congratulations to everyone participating, the findings were great and @xuwinnie rocked with their beautiful solo H 🙇 🐐
+
+{Reactions}
+STRONGERS_OP (8) 💜 (6) 
+
+[08/13/2024 09:03] forgebyola
+This is so impressive from radiantlabs. Congrats @haxatron @EV_om @3DOC 👏
+
+{Reactions}
+💜 (3) 
+
+[08/13/2024 09:05] forgebyola
+BTW I loved reading @alexfilippov314 reports. He put so much energy towards them
+
+{Reactions}
+🔥 
+
+[08/13/2024 09:20] alexfilippov314
+Thanks! I really appreciate it 🙂
+
+{Reactions}
+💜 
+
+[08/13/2024 10:13] __melonwater
+Thanks! You also did great job🍻
+
+{Reactions}
+🍻 (9) 💜 (8) 🔥 (3) 
+
+[08/13/2024 12:09] konfushon
+really @cts... femboys 😂 😂 
+
+Interesting! You never cease to amuse me with the names 😂
+
+{Reactions}
+🤣 (2) 
+
+[08/13/2024 13:35] ev_om
+Thank you all for the kind words and congratulations everyone else!! 💜 :party_skeletor: 🔥 🔥
+
+{Reactions}
+💜 (6) STRONGERS_OP (4) 
+
+[08/13/2024 17:00] holterhus
+Congrats everyone! 🚀
+
+{Reactions}
+💜 (5) 🙇‍♂️ (4) 
+
+[08/13/2024 19:01] 0xjuancito
+Bro you're a legend! 🏆
+
+{Reactions}
+💯 💜 unoreverse 
+
+[08/13/2024 21:35] gf_256
+Congrats everyone!
+
+
+[08/13/2024 21:35] gf_256
+Yall did amazing!
+
+
+[08/13/2024 21:35] gf_256
+I looked through the findings from Radiant, xuwinnie, zubat. They were really creative
+
+{Reactions}
+🔥 (10) 
+
+[08/13/2024 21:58] shealtielanz
+Shout out to @obront Amazing Judging even without any incentive.
+
+{Reactions}
+STRONGERS_OP (8) 💯 
+
+[08/14/2024 15:55] mr.tg0364
+Big congrats to all
+
+{Stickers}
+Code4rena - ARCHIVE-Q3-2024 - op-jul15 [1260638922397057094].txt_Files/751605873083678802-49A90.json
+
+{Reactions}
+🎉 (3) 🚀 (2) 🔥 (2) 🫡 (2) 
+
+[08/15/2024 05:53] web3tycoon
+How long can it take for it to reflect on the accounts
+
+
+[08/17/2024 12:36] unclejeff4407
+God damn didn't know @cts  was here
+
+{Reactions}
+cyberheart (2) 
+
+[08/17/2024 12:37] unclejeff4407
+Huge fan my dude
+
+
+[08/20/2024 07:56] alexfilippov314
+Reading the report and just want to thank @obront for the excellent judging. I wasn't able to participate in escalations, but it seems I didn't need to 🙂
+
+{Reactions}
+🔥 (7) 🫡 (4) STRONGERS_OP (4) 
+
+[08/22/2024 08:51] konfushon
+Started a thread.
+
+
+[08/22/2024 20:52] itsmetechjay
+ℹ️ This channel is pending archive.   As a result, any private threads will be permanently deleted on Friday, 30 August 2024.  Please make sure to grab anything you might need before then.
+
+
+[08/29/2024 15:25] itsmetechjay
+ℹ️ Reminder: this channel will be deleted after 24 hours.
+
+
+==============================================================
+Exported 166 message(s)
+==============================================================
